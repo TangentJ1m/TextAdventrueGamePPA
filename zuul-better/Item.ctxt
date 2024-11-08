@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=Item
+comment0.text=\r\n\ Class\ Item\ -\ items\ in\ an\ adventure\ game.\ \r\n\ \r\n\r\n\ This\ class\ is\ part\ of\ the\ "World\ of\ Zuul"\ application.\ \r\n\ "World\ of\ Zuul"\ is\ a\ very\ simple,\ text\ based\ adventure\ game.\ \ \r\n\r\n\ An\ "Item"\ represents\ one\ item\ in\ the\ scenery\ of\ the\ game.\ \ It\ has\ it's\r\n\ own\ weight\ and\ description.\ \ For\ each\ existing\ item,\ it\ contains\ a\ bool\r\n\ to\ store\ whether\ it\ can\ be\ picked\ up\ or\ not\ \r\n\ \r\n\ @author\ (Tanjim)\r\n\ @version\ (07/11/24)\r\n
+comment1.params=description\ pickedUp\ weight
+comment1.target=Item(java.lang.String,\ boolean,\ int)
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ item\r\n
+comment2.params=
+comment2.target=java.lang.String\ getLongDescription()
+comment2.text=\r\n\ \ Return\ a\ description\ of\ the\ item\ in\ the\ form\:\r\n\ \ \ \ \ Glass\ Weight\:\ 10\ and\ can\ be\ picked\ up\r\n\ \ \ \ \ \r\n\ @return\ A\ long\ description\ of\ item\r\n
+comment3.params=
+comment3.target=java.lang.String\ getDescription()
+comment3.text=\r\n\ @return\ The\ short\ description\ of\ the\ room\r\n\ (the\ one\ that\ was\ defined\ in\ the\ constructor).\r\n\ \r\n
+comment4.params=
+comment4.target=int\ getWeight()
+comment4.text=\r\n\ \r\n\ @return\ the\ weight\ of\ item\r\n\ (the\ one\ that\ was\ defined\ in\ the\ constructor)\r\n
+comment5.params=
+comment5.target=boolean\ getPickedUp()
+comment5.text=\r\n\ \r\n\ @returns\ whether\ you\ can\ pick\ up\ that\ item\r\n
+numComments=6
