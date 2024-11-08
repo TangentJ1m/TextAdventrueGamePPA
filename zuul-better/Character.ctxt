@@ -1,0 +1,24 @@
+#BlueJ class context
+comment0.target=Character
+comment0.text=\r\n\ Class\ character\ -\ a\ character\ in\ an\ adventure\ game\r\n\ \r\n\ This\ class\ is\ part\ of\ the\ "World\ of\ Zuul"\ application\r\n\r\n\ A\ Character\ represent\ an\ npc\ in\ the\ scenery\ in\ the\ game.\r\n\ They\ travel\ across\ rooms\ with\ user\ interference\r\n\ @author\ (Tanjim)\r\n\ @version\ (07/11/2024)\r\n
+comment1.params=Description\ Effect
+comment1.target=Character(java.lang.String,\ java.lang.String)
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Character\r\n
+comment2.params=item
+comment2.target=void\ addItem(Item)
+comment2.text=\r\n\ Adds\ itemheld\ to\ character\r\n\r\n\ @param\ \ item\ -\ item\ given\ to\ character\r\n
+comment3.params=
+comment3.target=java.lang.String\ getDescription()
+comment3.text=\r\n\ \r\n\ @returns\ description\r\n
+comment4.params=
+comment4.target=java.util.ArrayList\ getItemHeld()
+comment4.text=\r\n\ \r\n@Returns\ the\ list\ of\ items\ the\ character\ holds\r\n
+comment5.params=item
+comment5.target=void\ getRidOf(Item)
+comment6.params=
+comment6.target=void\ Moved()
+comment7.params=
+comment7.target=boolean\ getMoved()
+comment8.params=
+comment8.target=void\ NotMoved()
+numComments=9
