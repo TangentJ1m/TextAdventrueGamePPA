@@ -1,5 +1,5 @@
-Project: zuul-better
-Authors: Michael Kölling and David J. Barnes
+Project: TextAdventureGame
+Author: Tanjim
 
 This project is part of the material for the book
 
