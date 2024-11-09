@@ -92,7 +92,7 @@ public class Game
         outside.setExit("east", theater);
         outside.setExit("south", lab);
         outside.setExit("west", pub);
-        outside.setExit("North", teleporter);
+        outside.setExit("north", teleporter);
 
         theater.setExit("west", outside);
 
@@ -124,7 +124,7 @@ public class Game
                 teleport(player1);
             }
         }
-        System.out.println("Thank you for playing.  Good bye.");
+        System.out.println("Thank you for playing. Good bye.");
     }
 
     private void teleport(Player player){
@@ -143,7 +143,7 @@ public class Game
     {
         System.out.println();
         System.out.println("Welcome to the Escape the labryinth. The aim of this game to find a way out whilst evading the minotaur.");
-        System.out.print(" Escape the labryinth is a text-based game please type what you want to do.");
+        System.out.print("Escape the labryinth is a text-based game please type what you want to do.");
         System.out.println("Type 'help' if you need help.");
         printRoomInfo();
     }
