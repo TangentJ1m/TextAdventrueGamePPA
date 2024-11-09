@@ -158,7 +158,7 @@ public class Player
     public void inventory(){
         if(itemsHeld.size() > 0){
             for(Item item: itemsHeld){
-                System.out.println(item.getLongDescription());
+                System.out.println(item.getShortDescription());
             }
         }
         else{

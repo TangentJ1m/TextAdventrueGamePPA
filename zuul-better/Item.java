@@ -49,7 +49,12 @@ public class Item
             return description + " Weight: " + weight + " and can't be picked up";
         }
     }
-    
+
+    public String getShortDescription()
+    {
+        return description + " Weight: " + weight;
+    }
+
     /**
      * @return The short description of the room
      * (the one that was defined in the constructor).
