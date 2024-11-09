@@ -87,7 +87,7 @@ public class Room
      */
     private String getExitString()
     {
-        String returnString = "Exits:";
+        String returnString = "You can go:";
         Set<String> keys = exits.keySet();
         for(String exit : keys) {
             returnString += " " + exit;
@@ -171,15 +171,13 @@ public class Room
     public void showAllNpcs(){
         if(npcs.size() > 0)
         {
-            System.out.println("People here");
+            System.out.println("People you can interact");
             for(Character npc: npcs){
                 System.out.println("!> "+ npc.getDescription());
             }
-            System.out.println();
         }
         else{
             System.out.println("There's no one here.....");
-            System.out.println();
         }
     }
     
@@ -195,13 +193,19 @@ public class Room
             for(Item item: items){
                 System.out.println("!> "+ item.getLongDescription());
             }
-            System.out.println();
         }
         else{
             System.out.println("There's no items here.....");
-            System.out.println();
         }
     }
     
+    public Character isCharacterHere(String Target){
+        for(Character npc: npcs){
+            if(npc.isNPC(Target)){
+                return npc;
+            }
+        }
+        return null;
+    }
 }
 

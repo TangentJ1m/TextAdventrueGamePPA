@@ -75,4 +75,11 @@ public class Item
     public boolean getPickedUp(){
         return pickedUp;
     }
+    
+    /**
+     * 
+     */
+    public boolean isItem(String name){
+        return description.equals(name);
+    }
 }

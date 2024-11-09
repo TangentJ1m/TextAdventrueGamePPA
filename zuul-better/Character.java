@@ -64,8 +64,34 @@ public class Character
     public boolean getMoved(){
         return moved == true;
     }
+    
     public void NotMoved(){
         moved = false;
+    }
+    
+    public boolean isNPC(String Name){
+        return Description.equals(Name);
+    }
+    
+    public Item hasItemToSteal(String Name){
+        Item itemStolen = null;
+        if(itemsHeld.size() > 0)
+        {
+            for(Item item: itemsHeld){
+                if(item.isItem(Name)){
+                    itemStolen = item;
+                    itemsHeld.remove(item);
+                    return itemStolen;
+                }
+            }
+        }
+        else
+        {
+            System.out.println("They have nothing to steal");
+            return null;
+        }
+        
+        return null;
     }
     }
 

@@ -20,12 +20,8 @@ import java.util.*;
 public class Game 
 {
     private Parser parser;
-    private Room currentRoom;
+    private Player player1;
     private ArrayList<Room> rooms;
-    private Stack<Room> path;
-    private ArrayList<Item> itemsHeld;
-    private HashMap<String, Item> SetItems;
-    private int weightTotal;
             
     /**
      * Create the game and initialise its internal map.
@@ -33,11 +29,10 @@ public class Game
     public Game() 
     {
         parser = new Parser();
-        path = new Stack<Room>();
+        player1 = new Player();
         rooms = new ArrayList<Room>();
-        itemsHeld = new ArrayList<Item>();
-        SetItems = new HashMap<String, Item>();
         createRooms();
+        play();
     }
 
     /**
@@ -45,7 +40,7 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room outside, theater, pub, lab, office, teleporter;
         Item glass, drink, food, money, diamond;
         Character Kolling;
         
@@ -54,28 +49,31 @@ public class Game
         
         //Create the items
         glass = new Item("glass", true , 10);
-        SetItems.put("glass", glass);
+        //SetItems.put("glass", glass);
         drink = new Item("drink", false , 3);
-        SetItems.put("drink", drink);
+        //SetItems.put("drink", drink);
         food = new Item("food", true , 5);
-        SetItems.put("food", food);
+        //SetItems.put("food", food);
         money = new Item("money", true , 1);
-        SetItems.put("money", money);
+        //SetItems.put("money", money);
         diamond = new Item("diamond", false , 100);
-        SetItems.put("diamond", diamond);
+        //SetItems.put("diamond", diamond);
         
         
         // create the rooms
         outside = new Room("outside the main entrance of the university");
+        teleporter = new Room("Strange room. You shouldn't be here");
         theater = new Room("in a lecture theater");
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
+        
         rooms.add(outside);
         rooms.add(theater);
         rooms.add(pub);
         rooms.add(lab);
         rooms.add(office);
+        rooms.add(teleporter);
         
         //initialise room characters
         outside.addCharacter(Kolling);
@@ -95,6 +93,7 @@ public class Game
         outside.setExit("east", theater);
         outside.setExit("south", lab);
         outside.setExit("west", pub);
+        outside.setExit("North", teleporter);
 
         theater.setExit("west", outside);
 
@@ -105,7 +104,7 @@ public class Game
 
         office.setExit("west", lab);
 
-        currentRoom = outside;  // start game outside
+        player1.setRoom(outside); // start game outside
     }
 
     /**
@@ -122,24 +121,32 @@ public class Game
         while (! finished) {
             Command command = parser.getCommand();
             finished = processCommand(command);
-            for(Room room:rooms){
-                room.moveCharacters();
+            if(player1.getRoom().getShortDescription().equals("Strange room. You shouldn't be here")){
+                teleport(player1);
             }
         }
         System.out.println("Thank you for playing.  Good bye.");
     }
 
+    private void teleport(Player player){
+        Random rand = new Random();
+        Room randomRoom = rooms.get(rand.nextInt(rooms.size()));
+        player1.setRoom(randomRoom);
+        player1.clearPath();
+        System.out.println("You have been teleported to a random room");
+        printRoomInfo();
+    }
+    
     /**
      * Print out the opening message for the player.
      */
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("Welcome to the Escape the labryinth. The aim of this game to find a way out whilst evading the minotaur.");
+        System.out.print(" Escape the labryinth is a text-based game please type what you want to do.");
         System.out.println("Type 'help' if you need help.");
         printRoomInfo();
-        System.out.println();
     }
     
     
@@ -148,11 +155,11 @@ public class Game
      * 
      */
     private void printRoomInfo(){
-        
+        Room currentRoom = player1.getRoom();
         System.out.println(currentRoom.getLongDescription());
-        System.out.println("Equip Load "+ getWeightTotal()+"/200");
         currentRoom.showAllItems();
         currentRoom.showAllNpcs();
+        System.out.println("Equip Load "+ player1.getWeight()+"/200");
     }
     
     /**
@@ -193,6 +200,7 @@ public class Game
         }
         else if (commandWord.equals("steal")){
             steal(command);
+            
         }
         // else command not recognised.
         return wantToQuit;
@@ -220,6 +228,7 @@ public class Game
      */
     private void goRoom(Command command) 
     {
+        Room currentRoom = player1.getRoom();
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             System.out.println("Go where?");
@@ -235,8 +244,7 @@ public class Game
             System.out.println("There is no door!");
         }
         else {
-            path.add(currentRoom);
-            currentRoom = nextRoom;
+            player1.setRoom(nextRoom);
             printRoomInfo();
         }
     }
@@ -247,6 +255,10 @@ public class Game
      * 
      */
     private void backRoom(){
+        if(player1.goBack() == true){
+            printRoomInfo();
+        }
+        /**
         if(path.size() == 0){
             System.out.println("You can't go back anywhere....");
             return;
@@ -255,6 +267,7 @@ public class Game
             currentRoom = path.pop();
             printRoomInfo();
         }
+        */
     }
     
     
@@ -265,9 +278,10 @@ public class Game
         }
     
         String object = command.getSecondWord();
-        Item itemToDrop = SetItems.get(object);
+        player1.drop(object);
+        //Item itemToDrop = SetItems.get(object);
     
-        
+        /**
         // If itemToDrop was found, remove it from itemsHeld and add it to the current room
         if (itemToDrop != null) {
             weightTotal -= itemToDrop.getWeight();
@@ -277,6 +291,7 @@ public class Game
         } else {
             System.out.println("You don't have that item.");
         }
+        */
     }
 
     
@@ -296,6 +311,8 @@ public class Game
         Item itemToPickUp = null;
         
         String object = command.getSecondWord();
+        player1.pickUp(object);
+        /**
         ArrayList<Item> items = currentRoom.getItemList();
         
         // Try to find an item is in the room
@@ -314,6 +331,7 @@ public class Game
         {
             System.out.println("That item isn't in the room");
         }
+        */
     }
     
     /** 
@@ -332,53 +350,19 @@ public class Game
         }
     }
     
-    /**
-     *Returns weight total
-     */
-    private int getWeightTotal(){
-        return weightTotal;
-    }
-    
-    /**
-     * 
-     *@Returns a string determining if the user can pick up that item
-     */
-    
-    private void ValidPickUp(Item item){
-        if(weightTotal + item.getWeight() > 200)
-            {
-                System.out.println("You're carrying too much");
-            }
-        else if(!item.getPickedUp())
-            {
-                System.out.println("This item can't be picked up");
-            }
-        else
-            {
-                System.out.println("Item was picked up");
-                itemsHeld.add(item);
-                weightTotal += item.getWeight();
-            }
-        }
         
     /**
      * 
      *@Return a string showing all items held by user
      */
     private void inventory(){
-        if(itemsHeld.size() > 0){
-            for(Item item: itemsHeld){
-                System.out.println(item.getLongDescription());
-            }
-        }
-        else{
-            System.out.println("You have no items with you");
-        }
+        player1.inventory();
     }
     
     /**
      * 
      *@Return removes an item from an npc and adds it to the user
+     *
      */
     private void steal(Command command){
         if(!command.hasSecondWord() || !command.hasthirdWord()){
@@ -387,34 +371,7 @@ public class Game
         }
         Character Target = null;
         String Person = command.getSecondWord();
-        ArrayList<Character> List = currentRoom.getCharacterList();
-        for(Character npc:List){
-            if(npc.getDescription().equals(Person)){
-                Target = npc;
-                break;
-            }
-        }
-        if(Target == null){
-            System.out.println("Can't steal from someone whose not here");
-            return;
-        }
-        String Object = command.getThirdWord();
-        Item sobject = null; //stolen object
-        ArrayList<Item> List2 = Target.getItemHeld();
-        for(Item item: List2){
-            if(item.getDescription().equals(Object)){
-                sobject = item;
-                break;
-            }
-        }
-        
-        if(sobject == null){
-            System.out.println("It doesn't have that item");
-        }
-        else{
-            System.out.println("You have stolen that item");
-            Target.getRidOf(sobject);
-            itemsHeld.add(sobject);
-        }
+        String StealItem = command.getThirdWord();
+        player1.steal(Person, StealItem);
     }
 }
