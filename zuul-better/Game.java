@@ -32,7 +32,6 @@ public class Game
         player1 = new Player();
         rooms = new ArrayList<Room>();
         createRooms();
-        play();
     }
 
     /**
